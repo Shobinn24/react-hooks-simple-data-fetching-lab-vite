@@ -1,77 +1,132 @@
-# React Simple Data Fetching Lab
+# Random Dog Image Fetcher
 
-## Learning Goals
+A React application that fetches and displays random dog images from the Dog CEO API. This project demonstrates fundamental React concepts including hooks, API integration, and event handling.
 
-- Use the `useEffect` hook to fetch data from an API and render to the page.
-- Use an event handler to fetch data from an API and render to the page.
+## Features
 
-## Getting Started
-- Fork this lab on GitHub and clone locally.
-- To run the lab:
+- Displays random dog images on page load
+- Fetch new random dog images with a button click
+- Loading state while fetching data
+- Clean, simple user interface
+
+## Technologies Used
+
+- **React** - Frontend framework
+- **Vite** - Build tool and development server
+- **Dog CEO API** - Free API for random dog images
+- **JavaScript (ES6+)** - Programming language
+
+## Learning Objectives
+
+This project demonstrates proficiency in:
+
+- Using the `useEffect` hook for side effects
+- Managing component state with `useState`
+- Fetching data from external APIs
+- Handling asynchronous operations
+- Conditional rendering based on state
+- Event handling in React
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/Shobinn24/react-hooks-simple-data-fetching-lab-vite.git
+cd react-hooks-simple-data-fetching-lab-vite
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
 ```bash
 npm run dev
 ```
-- To run the test suite:
+
+4. Open your browser and navigate to the local development URL (typically `http://localhost:5173`)
+
+## Usage
+
+- The app automatically loads a random dog image when first opened
+- Click the "Load New Dog" button to fetch and display a new random dog image
+- A "Loading..." message appears while fetching data from the API
+
+## Testing
+
+Run the test suite:
 ```bash
 npm run test
 ```
-- Commit and push your code as you go.
 
-## Deliverables
+## Code Highlights
 
-This lab is missing the `App` component that `index.js` is looking for. To pass
-the tests in this lab:
-
-- Create an `App` component from scratch, along with any other components you 
-  choose for the component hierachy.
-- Use the `useEffect` hook in the `App` component. Inside the callback for
-  `useEffect`, send a `fetch` request to
-  `https://dog.ceo/api/breeds/image/random`, a free API that returns a random
-  image of a dog.
-- Display a `<p>` tag with the text of "Loading..." when the component is first
-  rendered
-- After receiving a response from the API, show the dog image in an `<img>` tag,
-  with the `alt` attribute set to "A Random Dog".
-  - For the test suite to work properly, this should be the only `<img>` tag in 
-  the application .
-- Create a `<button>` tag that, on click, fetches a new dog image and updates the 
-  dog image displayed.
-  - For the test suite to work properly, this should be the only `<button>` tag in 
-  the application .
-
-## Lab Instructions
-### 1. Define the Problem
-* Load a random dog image on the page when the app first loads.
-* Allow the user to change the dog image by a button click.
-* Display a loading message for the user while waiting for API requests.
-### 2. Determine the Design
-* Determine Component Tree
-  * At minimum, you'll need an App component for the test suite
-* Determine state and props needed for each component
-### 3. Develop the Code
-* Open React application in browser
-```bash
-npm run dev
+### useEffect for Initial Data Fetch
+```jsx
+useEffect(() => {
+  fetchDogImage();
+}, []);
 ```
-  - Run test suite
-```bash
-npm run test
-```
-* Create components and render
-* Manage component state and props
-* Implement useEffect and button with onClick
-* Add fetch requests to both the event handler and useEffect
-  * Fetch requests should make a GET request to “https://dog.ceo/api/breeds/image/random”
-* Update state accordingly to store the current dog image
-* Render the dog image in the jsx based on the data from the fetch request
-  * Be sure to look at how the data is formatted from the fetch request when setting the 
-  properties of the HTML image tag.
-### 4. Test and Refine 
-* Debugging and testing during coding using React DevTools in Chrome
-### 5. Document and Maintain 
-* Commit as you go, writing meaningful commit messages
-* Push commit history to GitHub periodically and when lab is complete
+Fetches a dog image when the component mounts.
 
-## Submission
-Once the lab is complete, all tests are passing, and you've pushed the completed code to 
-your forked repo on GitHub, submit your GitHub repo through Canvas using CodeGrade.
+### Async Data Fetching
+```jsx
+fetch('https://dog.ceo/api/breeds/image/random')
+  .then(response => response.json())
+  .then(data => {
+    setDogImage(data.message);
+    setIsLoading(false);
+  });
+```
+Retrieves random dog images from the API and updates state.
+
+### Conditional Rendering
+```jsx
+{isLoading ? (
+  <p>Loading...</p>
+) : (
+  <img src={dogImage} alt="A Random Dog" />
+)}
+```
+Shows loading state until data is available.
+
+## API Reference
+
+**Endpoint:** `https://dog.ceo/api/breeds/image/random`
+
+**Method:** GET
+
+**Response:**
+```json
+{
+  "message": "https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg",
+  "status": "success"
+}
+```
+
+## Project Structure
+```
+├── src/
+│   ├── App.jsx          # Main application component
+│   ├── index.css        # Global styles
+│   └── main.jsx         # Application entry point
+├── package.json         # Project dependencies
+└── README.md           # Project documentation
+```
+
+## Future Enhancements
+
+- Add ability to select specific dog breeds
+- Implement image gallery to save favorite dogs
+- Add error handling UI for failed API requests
+- Include loading spinner animation
+- Add share functionality for dog images
+
+## Author
+
+**Shobinn Clark** - Full-Stack Software Engineering Student at Flatiron School
+
+## Acknowledgments
+- Flatiron School for the lab assignment
+
